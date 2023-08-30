@@ -23,5 +23,5 @@ To test,
 To Rollback
 ```
     docker rm u1 -f
-    docker rmi nowage/ubuntu:test
+    docker rmi ujitgy/ubuntu:test
 ```
