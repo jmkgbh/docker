@@ -90,6 +90,7 @@ k get po -o wide|grep vm01|wc -l
 kubectl scale deployment nginx --replicas=4
 ```
 ## daemonsets
+```
 cat <<EOF> d.yaml
 apiVersion: apps/v1
 kind: DaemonSet
@@ -111,7 +112,6 @@ spec:
         - containerPort: 80
           hostPort: 6379
 EOF
-
 kubectl create -f d.yaml
 
 k edit ds/httpd
@@ -142,8 +142,10 @@ k get rs
 k get svc
 k delete svc/nginx
 # rs는 자동으로 지워졌음.
+
 ```
-* 결론 rs,pod와 같이 자동으로 만들어진 객체는 yaml파일 생성할 필요 없음.
+* 결론 rs,pod와 같이 자동으로 만들어진 객체는 yaml파일 생성할 필요 없음. 
+
 
 # Label
 ```
@@ -154,6 +156,7 @@ k get po --show-labels
 k label po/nginx-55f598f8d-8t45p app2=v2  --overwrite
 k label po/nginx-55f598f8d-8t45p app2-
 ```
+
 # NameSpaces
 ```
 k get ns
@@ -179,8 +182,10 @@ kubectl create deployment --image=nginx --port=80 nginxxxxx
 k delete ns project1
 k get all --all-namespaces | grep xxx # 없음...
 ```
+
+
 # cf
-## jq (https://jsonpath.com/ 활용할 것)
+## jq(https://jsonpath.com/ 활용할 것)
 * jq(Json Query)
 ```
 apt install -y jq
