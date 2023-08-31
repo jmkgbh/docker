@@ -162,12 +162,22 @@ k get po -n kube-system
 k get all 
 k get all --all-namespaces
 
+
 k config set-context  --current --namespace=kube-system
 k get deploy #== k get deploy -n kube-system
 echo 'alias kn="kubectl config set-context  --current --namespace"'>> ~/.bashrc
 . ~/.bashrc
 kn kube-system
 kn default
+
+k create ns project1
+kn project1
+k get all
+# 'kn project1'>>~/.bashrc
+
+kubectl create deployment --image=nginx --port=80 nginxxxxx
+k delete ns project1
+k get all --all-namespaces | grep xxx # 없음...
 ```
 # cf
 ## jq (https://jsonpath.com/ 활용할 것)
