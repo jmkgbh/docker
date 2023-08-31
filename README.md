@@ -1,27 +1,113 @@
-# dockerfiles-ubuntu-user-adderable
-Ubuntu, It support base user creation and password setting.
+# Kubernete 사용전 셋팅
+* root계정에서 실행(#)
+* alias 
+```
+echo "alias k='kubectl'">> ~/.bashrc
+echo 'complete -o default -F __start_kubectl k' >>~/.bashrc
+. ~/.bashrc
+```
+# Short names
+| Short name    |Full name                  |
+|---------------|---------------------------|
+| po            |pods                       |
+| rs            |replicasets                |
+| svc           |services                   |
+| ns            |namespaces                 |
+| no            |nodes                      |
+| ep            |endpoints                  |
+| ds            |daemonsets                 |
+| deploy        |deployments                |
+| -             | -                         |
+| cm            |configmaps                 |
+| cs            |componentstatuses          |
+| csr           |certificatesigningrequests |
+| ev            |events                     |
+| hpa           |horizontalpodautoscalers   |
+| ing           |ingresses                  |
+| limits        |limitranges                |
+| pdb           |poddisruptionbudgets       |
+| psp           |podsecuritypolicies        |
+| pv            |persistentvolumes          |
+| pvc           |persistentvolumeclaims     |
+| quota         |resourcequotas             |
+| rc            |replicationcontrollers     |
+| sa            |serviceaccounts            |
 
-# Building & Running
-
-Copy the sources to your docker host and build the container, and to run.
+* cf
 ```
-	docker build   --rm -t ujitgy/ubuntu:test .
-	docker run -it --rm --name u1  ujitgy/ubuntu:test
-```
-Get the port that the container is listening on:
-
-```
-# docker ps
-CONTAINER ID        IMAGE                COMMAND             CREATED             STATUS              PORTS               NAMES
-63a0ba73bf81        ujitgy/ubuntu:test   "/bin/bash"         4 seconds ago       Up 3 seconds                            u1
+kubectl get nodes
+   ↓
+k get no
 ```
 
-To test,
+## 정보 얻기
 ```
-	tree
+kubectl cluster-info
+kubectl get nodes
+k get  -h
+kubectl get pods
+kubectl get pods -o wide
+kubectl get pods --all-namespaces
+
+kubectl version
+kubectl get deployments
+kubectl get services
 ```
-To Rollback
+
+## deploy
 ```
-    docker rm u1 -f
-    docker rmi ujitgy/ubuntu:test
+kubectl create deployment --image=nginx --port=80 nginx
+k get po
+k get deploy
+k delete deploy/nginx
+k get po
+k get deploy
+
 ```
+
+## pods
+```
+k get po
+{결과에서 pod명 복사}
+k exec nginx-77b4fdf86c-tjcxv -- pwd
+k exec -it nginx-77b4fdf86c-tjcxv -- bash
+```
+
+## SerViCe
+```
+kubectl create deployment --image=nginx --port=80 nginx
+kubectl expose deploy nginx --type="NodePort" --port 80
+k get svc
+k describe svc/nginx
+curl 10.233.115.197 # vm01
+```
+## Replication Set
+```
+kubectl scale deployment nginx --replicas=4
+k get deploy
+k get po
+k get rs
+k get po -o wide|grep vm01|wc -l
+kubectl scale deployment nginx --replicas=4
+```
+## daemonsets
+cat <<EOF> d.yaml
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: httpd
+spec:
+  selector:
+    matchLabels:
+      app: httpd
+  template:
+    metadata:
+      labels:
+        app: httpd
+    spec:
+      containers:
+      - name: httpd
+        image: httpd
+        ports:
+        - containerPort: 80
+          hostPort: 6379
