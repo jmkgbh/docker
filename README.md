@@ -154,6 +154,21 @@ k get po --show-labels
 k label po/nginx-55f598f8d-8t45p app2=v2  --overwrite
 k label po/nginx-55f598f8d-8t45p app2-
 ```
+# NameSpaces
+```
+k get ns
+k get po --all-namespaces
+k get po -n kube-system
+k get all 
+k get all --all-namespaces
+
+k config set-context  --current --namespace=kube-system
+k get deploy #== k get deploy -n kube-system
+echo 'alias kn="kubectl config set-context  --current --namespace"'>> ~/.bashrc
+. ~/.bashrc
+kn kube-system
+kn default
+```
 # cf
 ## jq (https://jsonpath.com/ 활용할 것)
 * jq(Json Query)
