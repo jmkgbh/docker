@@ -62,7 +62,6 @@ k get deploy
 k delete deploy/nginx
 k get po
 k get deploy
-
 ```
 
 ## pods
@@ -143,11 +142,8 @@ k get rs
 k get svc
 k delete svc/nginx
 # rs는 자동으로 지워졌음.
-
 ```
 * 결론 rs,pod와 같이 자동으로 만들어진 객체는 yaml파일 생성할 필요 없음.
-
-
 
 # Label
 ```
@@ -158,7 +154,6 @@ k get po --show-labels
 k label po/nginx-55f598f8d-8t45p app2=v2  --overwrite
 k label po/nginx-55f598f8d-8t45p app2-
 ```
-
 # cf
 ## jq (https://jsonpath.com/ 활용할 것)
 * jq(Json Query)
