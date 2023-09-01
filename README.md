@@ -60,3 +60,11 @@ tmux send-keys  -t session_name:0.0 'whomai' Enter
 * Scroll Mode 진입 : C+b,[     
     - 아래화살표·위화살표,PageUp,PageDown키로 화면 이동
     - esc키로 화Scroll Mode 끝내기
+
+#### alias example
+```
+alias t='tmux '
+alias ta='tmux attach -t '
+alias tl='tmux ls'
+alias tn='tmux new -s '
+```
